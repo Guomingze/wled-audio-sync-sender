@@ -1064,8 +1064,7 @@
   -fx-effect: dropshadow(gaussian, -app-glow, 9, 0.14, 0, 0);
 }
 
-.switch-toggle:disabled,
-.switch-toggle:disabled + .switch-label {
+.switch-toggle:disabled {
   -fx-opacity: 0.62;
 }
 
@@ -1150,42 +1149,62 @@
   -fx-text-fill: rgba(94, 234, 212, 0.95);
 }
 
-.app-root .log-clear-button {
-  -fx-background-color: -app-card-bg;
+.app-root .button.log-clear-button,
+.app-root #clearLogButton {
+  -fx-background-color: -app-input-bg;
+  -fx-background-insets: 0;
+  -fx-border-insets: 0;
   -fx-text-fill: -app-field-label;
   -fx-border-color: -app-input-border;
   -fx-border-width: 1;
-  -fx-border-radius: 9;
-  -fx-background-radius: 9;
-  -fx-min-width: 56px;
-  -fx-pref-width: 56px;
-  -fx-max-width: 56px;
+  -fx-border-radius: 8;
+  -fx-background-radius: 8;
+  -fx-min-width: 52px;
+  -fx-pref-width: 52px;
+  -fx-max-width: 52px;
   -fx-min-height: 24px;
   -fx-pref-height: 24px;
   -fx-max-height: 24px;
-  -fx-padding: 0 10;
+  -fx-padding: 0 8;
   -fx-font-size: 11px;
   -fx-font-weight: 700;
+  -fx-effect: none;
+  -fx-cursor: hand;
 }
 
-.app-root .log-clear-button:hover {
+.app-root .button.log-clear-button:hover,
+.app-root #clearLogButton:hover {
   -fx-background-color: -app-popup-hover-bg;
   -fx-border-color: -app-mark;
   -fx-text-fill: -app-heading;
 }
 
-.app-root .log-clear-button:pressed {
-  -fx-background-color: -app-input-bg;
+.app-root .button.log-clear-button:pressed,
+.app-root #clearLogButton:pressed {
+  -fx-background-color: derive(-app-input-bg, -4%);
+  -fx-border-color: -app-mark;
 }
 
-.app-root.theme-noir .log-clear-button {
+.app-root.theme-noir .button.log-clear-button,
+.app-root.theme-noir #clearLogButton {
   -fx-border-radius: 6;
   -fx-background-radius: 6;
 }
 
-.app-root.theme-paper .log-clear-button {
+.app-root.theme-paper .button.log-clear-button,
+.app-root.theme-paper #clearLogButton {
+  -fx-background-color: rgba(255, 255, 255, 0.98);
+  -fx-border-color: rgba(71, 85, 105, 0.34);
+  -fx-text-fill: rgba(15, 23, 42, 0.90);
   -fx-border-radius: 7;
   -fx-background-radius: 7;
+}
+
+.app-root.theme-paper .button.log-clear-button:hover,
+.app-root.theme-paper #clearLogButton:hover {
+  -fx-background-color: rgba(241, 245, 249, 0.98);
+  -fx-border-color: rgba(37, 99, 235, 0.56);
+  -fx-text-fill: rgba(15, 23, 42, 0.98);
 }
 
 #startButton {

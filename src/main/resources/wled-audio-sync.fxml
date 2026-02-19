@@ -188,7 +188,7 @@
               <children>
                 <Label fx:id="logTitleLabel" text="运行日志 (Log)" styleClass="section-title"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button fx:id="clearLogButton" text="清空" onAction="#onClearLog" styleClass="log-clear-button"/>
+                <Button fx:id="clearLogButton" id="clearLogButton" text="清空" onAction="#onClearLog" styleClass="log-clear-button"/>
               </children>
             </HBox>
             <TextArea fx:id="logArea" editable="false" wrapText="true" prefRowCount="14" VBox.vgrow="ALWAYS"/>

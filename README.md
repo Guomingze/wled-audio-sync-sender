@@ -11,10 +11,6 @@
 
 ![GUI 预览](docs/assets/gui-overview.png)
 
-## 30 秒上手
-
-![30 秒上手](docs/assets/quickstart-30s.gif)
-
 ## 功能亮点
 
 - JavaFX GUI，参数可视化配置（输入设备、目标地址、模式、FPS、FFT 等）
