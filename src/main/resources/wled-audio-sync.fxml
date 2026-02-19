@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="rootPane" prefWidth="980.0" prefHeight="660.0" styleClass="app-root"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="local.wled.app.WledAudioSyncSenderFxController">
+  <top>
+    <HBox alignment="CENTER_LEFT" spacing="16.0" BorderPane.alignment="CENTER">
+      <children>
+        <VBox spacing="4.0">
+          <children>
+            <Label fx:id="titleLabel" text="WLED 音频同步发送器" styleClass="header-title"/>
+            <Label fx:id="subtitleLabel" text="把实时音频分析发送到 WLED 设备，让灯效跟着节奏跳动。" styleClass="header-subtitle" wrapText="true" maxWidth="520.0"/>
+          </children>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <VBox alignment="CENTER_RIGHT" spacing="8.0" fillWidth="false">
+          <children>
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+              <children>
+                <HBox fx:id="themeBar" alignment="CENTER_RIGHT" spacing="8.0" styleClass="top-chip">
+                  <children>
+                    <Label fx:id="themeLabel" text="主题" styleClass="chip-label"/>
+                    <ComboBox fx:id="themeBox" prefWidth="220.0" onAction="#onThemeChanged"/>
+                  </children>
+                </HBox>
+                <HBox fx:id="spectrumStyleBar" alignment="CENTER_RIGHT" spacing="8.0" styleClass="top-chip">
+                  <children>
+                    <Label fx:id="spectrumStyleLabel" text="风格" styleClass="chip-label"/>
+                    <ComboBox fx:id="spectrumStyleBox" prefWidth="148.0" onAction="#onSpectrumStyleChanged"/>
+                  </children>
+                </HBox>
+              </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+              <children>
+                <HBox fx:id="effectIntensityBar" alignment="CENTER_RIGHT" spacing="8.0" styleClass="intensity-chip" HBox.hgrow="NEVER">
+                  <children>
+                    <Label text="特效" styleClass="chip-label"/>
+                    <StackPane fx:id="effectIntensitySliderWrap" minWidth="72.0" prefWidth="72.0" maxWidth="72.0">
+                      <children>
+                        <Slider id="effectIntensitySlider" fx:id="effectIntensitySlider" min="0.0" max="100.0" value="62.0" blockIncrement="5.0" majorTickUnit="25.0" minWidth="72.0" prefWidth="72.0" maxWidth="72.0" HBox.hgrow="NEVER" style="-fx-min-width: 72; -fx-pref-width: 72; -fx-max-width: 72;"/>
+                      </children>
+                    </StackPane>
+                    <Label fx:id="effectIntensityValueLabel" text="62%" styleClass="chip-label intensity-value"/>
+                  </children>
+                </HBox>
+                <HBox fx:id="verboseToggleBar" alignment="CENTER" styleClass="top-chip">
+                  <children>
+                    <CheckBox fx:id="verboseCheck" text="详细日志"/>
+                  </children>
+                </HBox>
+                <HBox fx:id="logToggleBar" alignment="CENTER" styleClass="top-chip">
+                  <children>
+                    <CheckBox fx:id="logVisibleCheck" text="显示日志"/>
+                  </children>
+                </HBox>
+              </children>
+            </HBox>
+          </children>
+        </VBox>
+      </children>
+      <BorderPane.margin>
+        <Insets top="18.0" right="18.0" bottom="8.0" left="18.0"/>
+      </BorderPane.margin>
+    </HBox>
+  </top>
+  <center>
+    <BorderPane>
+      <center>
+        <VBox fx:id="mainColumn" spacing="12.0">
+          <children>
+            <VBox fx:id="consoleCard" spacing="12.0" styleClass="card" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets top="14.0" right="14.0" bottom="14.0" left="14.0"/>
+              </padding>
+              <children>
+                <Label fx:id="consoleTitleLabel" text="实时控制台 (Live Console)" styleClass="section-title"/>
+                <GridPane hgap="12.0" vgap="10.0">
+                  <columnConstraints>
+                    <ColumnConstraints minWidth="156.0" prefWidth="156.0" maxWidth="156.0"/>
+                    <ColumnConstraints minWidth="220.0" prefWidth="300.0" maxWidth="340.0" hgrow="ALWAYS"/>
+                    <ColumnConstraints minWidth="124.0" prefWidth="124.0" maxWidth="124.0"/>
+                    <ColumnConstraints minWidth="160.0" prefWidth="220.0" maxWidth="280.0"/>
+                  </columnConstraints>
+                  <children>
+                    <Label text="输入设备 (Input Device)" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <HBox alignment="CENTER_LEFT" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS">
+                      <children>
+                        <ComboBox fx:id="inputBox" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="refreshButton" id="refreshButton" text="↻" onAction="#onRefreshDevices" styleClass="refresh-icon-button"/>
+                        <Label fx:id="refreshStatusLabel" text="" styleClass="refresh-status-label" managed="false" visible="false"/>
+                      </children>
+                    </HBox>
+
+                    <Label text="目标地址 (Destination)" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField fx:id="destField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS"/>
+                    <Label text="端口 (Port)" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                    <TextField fx:id="portField" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS"/>
+
+                    <Label text="采样率 (Sample Rate)" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField fx:id="rateField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS"/>
+                    <Label text="声道 (Channels)" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                    <TextField fx:id="channelsField" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS"/>
+
+                    <Label text="频谱窗口 (FFT Size)" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <TextField fx:id="fftField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS"/>
+                    <Label text="发送帧率 (FPS)" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                    <TextField fx:id="fpsField" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS"/>
+
+                    <Label text="推送模式 (Push Mode)" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <ComboBox fx:id="outputModeBox" prefWidth="206.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.hgrow="ALWAYS" onAction="#onOutputModeChanged"/>
+                    <Label text="DDP 像素数 (Pixels)" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                    <TextField fx:id="pixelCountField" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.hgrow="ALWAYS"/>
+
+                    <Label text="DDP 布局 (Layout)" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                    <ComboBox fx:id="ddpLayoutBox" prefWidth="206.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.hgrow="ALWAYS"/>
+
+                    <Label text="DDP 配色 (Palette)" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+                    <ComboBox fx:id="ddpPaletteBox" prefWidth="206.0" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.hgrow="ALWAYS"/>
+                  </children>
+                </GridPane>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                  <children>
+                    <HBox alignment="CENTER_LEFT" spacing="6.0" styleClass="switch-chip">
+                      <children>
+                        <ToggleButton fx:id="masterSwitchCheck" selected="false" onAction="#onMasterSwitchChanged" styleClass="switch-toggle"/>
+                        <Label text="总开关 (Master)" styleClass="switch-label"/>
+                      </children>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="6.0" styleClass="switch-chip">
+                      <children>
+                        <ToggleButton fx:id="captureSwitchCheck" selected="true" onAction="#onCaptureSwitchChanged" styleClass="switch-toggle"/>
+                        <Label text="采集开关 (Capture)" styleClass="switch-label"/>
+                      </children>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="6.0" styleClass="switch-chip">
+                      <children>
+                        <ToggleButton fx:id="pushSwitchCheck" selected="true" onAction="#onPushSwitchChanged" styleClass="switch-toggle"/>
+                        <Label text="推送开关 (Push)" styleClass="switch-label"/>
+                      </children>
+                    </HBox>
+                  </children>
+                </HBox>
+
+                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                  <children>
+                    <Label fx:id="meterTitleLabel" text="实时频谱 (Spectrum · 32-band)" styleClass="subsection-title"/>
+                    <StackPane fx:id="spectrumFrame" styleClass="spectrum-frame" VBox.vgrow="ALWAYS">
+                      <children>
+                        <Canvas fx:id="spectrumCanvas" />
+                      </children>
+                    </StackPane>
+                    <Label fx:id="statsLabel" text="状态 (Status)：空闲 (Idle)" styleClass="status-label" maxWidth="960.0"/>
+                  </children>
+                </VBox>
+              </children>
+            </VBox>
+          </children>
+        </VBox>
+      </center>
+      <right>
+        <VBox fx:id="logCard" spacing="12.0" styleClass="card" minWidth="300.0" prefWidth="360.0" maxWidth="420.0">
+          <padding>
+            <Insets top="18.0" right="18.0" bottom="18.0" left="18.0"/>
+          </padding>
+          <children>
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
+              <children>
+                <Label fx:id="logTitleLabel" text="运行日志 (Log)" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="clearLogButton" text="清空" onAction="#onClearLog" styleClass="log-clear-button"/>
+              </children>
+            </HBox>
+            <TextArea fx:id="logArea" editable="false" wrapText="true" prefRowCount="14" VBox.vgrow="ALWAYS"/>
+          </children>
+          <BorderPane.margin>
+            <Insets left="12.0"/>
+          </BorderPane.margin>
+        </VBox>
+      </right>
+      <BorderPane.margin>
+        <Insets top="0.0" right="18.0" bottom="18.0" left="18.0"/>
+      </BorderPane.margin>
+    </BorderPane>
+  </center>
+</BorderPane>

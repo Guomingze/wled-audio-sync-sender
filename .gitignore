@@ -1,0 +1,20 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Build artifacts
+target/
+out/
+build/
+dist/
+release/
+
+# Packaged app/archive outputs
+*.app
+*.dmg
+*.zip
+*.tar
+*.tar.gz
+
+# Compiled bytecode
+*.class

@@ -1,0 +1,1267 @@
+.app-root {
+  -fx-font-family: "PingFang SC", "Helvetica Neue", "Avenir Next", "Microsoft YaHei UI", sans-serif;
+  -fx-background-color: #070b1a;
+}
+
+.app-root .label,
+.app-root .check-box,
+.app-root .text-field,
+.app-root .combo-box-base,
+.app-root .text-area {
+  -fx-font-style: normal;
+}
+
+.app-root.theme-cyber {
+  -fx-background-color:
+    radial-gradient(center 20% 14%, radius 57%, rgba(34, 211, 238, 0.24), rgba(34, 211, 238, 0.0) 64%),
+    radial-gradient(center 80% 25%, radius 62%, rgba(163, 230, 53, 0.18), rgba(163, 230, 53, 0.0) 66%),
+    radial-gradient(center 72% 80%, radius 72%, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.0) 64%),
+    linear-gradient(to bottom right, #04070f, #081022 46%, #0a1528 100%);
+  -app-card-bg: rgba(7, 11, 24, 0.72);
+  -app-card-border: rgba(125, 211, 252, 0.28);
+  -app-frame-bg: linear-gradient(to bottom right, rgba(5, 11, 24, 0.94), rgba(10, 19, 34, 0.84));
+  -app-frame-border: rgba(125, 211, 252, 0.24);
+  -app-slot-bg: rgba(255, 255, 255, 0.035);
+  -app-slot-border: rgba(148, 163, 184, 0.10);
+  -app-bar-gradient: linear-gradient(to top, #22d3ee 0%, #a3e635 55%, #f59e0b 100%);
+  -app-peak-color: rgba(253, 224, 71, 0.94);
+  -app-heading: #e2e8f0;
+  -app-title: #f8fafc;
+  -app-sub: rgba(226, 232, 240, 0.84);
+  -app-input-bg: rgba(13, 20, 37, 0.96);
+  -app-input-border: rgba(125, 211, 252, 0.34);
+  -app-input-text: #e2e8f0;
+  -app-input-placeholder: rgba(226, 232, 240, 0.58);
+  -app-field-label: rgba(226, 232, 240, 0.90);
+  -app-mark: #22d3ee;
+  -app-button-start: linear-gradient(to right, #22d3ee, #a3e635);
+  -app-button-start-text: #041015;
+  -app-glow: rgba(34, 211, 238, 0.44);
+  -app-log-bg: rgba(8, 13, 26, 0.93);
+  -app-log-text: #e2e8f0;
+  -app-log-scroll-track: rgba(148, 163, 184, 0.16);
+  -app-log-scroll-thumb: rgba(148, 163, 184, 0.52);
+  -app-log-scroll-thumb-hover: rgba(226, 232, 240, 0.72);
+  -app-popup-hover-bg: rgba(148, 163, 184, 0.16);
+  -app-switch-chip-bg: rgba(15, 18, 30, 0.42);
+}
+
+.app-root.theme-electro {
+  -fx-background-color:
+    radial-gradient(center 16% 14%, radius 58%, rgba(16, 185, 129, 0.30), rgba(16, 185, 129, 0.0) 64%),
+    radial-gradient(center 78% 23%, radius 62%, rgba(132, 204, 22, 0.22), rgba(132, 204, 22, 0.0) 66%),
+    radial-gradient(center 74% 80%, radius 70%, rgba(45, 212, 191, 0.16), rgba(45, 212, 191, 0.0) 66%),
+    linear-gradient(to bottom right, #030a08, #07160f 44%, #0a2015 100%);
+  -app-card-bg: rgba(6, 20, 14, 0.72);
+  -app-card-border: rgba(74, 222, 128, 0.34);
+  -app-frame-bg: linear-gradient(to bottom right, rgba(5, 22, 14, 0.94), rgba(9, 30, 20, 0.84));
+  -app-frame-border: rgba(110, 231, 183, 0.30);
+  -app-slot-bg: rgba(255, 255, 255, 0.028);
+  -app-slot-border: rgba(110, 231, 183, 0.16);
+  -app-bar-gradient: linear-gradient(to top, #34d399 0%, #a3e635 58%, #bef264 100%);
+  -app-peak-color: rgba(217, 249, 157, 0.96);
+  -app-heading: #dcfce7;
+  -app-title: #f0fdf4;
+  -app-sub: rgba(220, 252, 231, 0.84);
+  -app-input-bg: rgba(10, 28, 20, 0.96);
+  -app-input-border: rgba(110, 231, 183, 0.38);
+  -app-input-text: #dcfce7;
+  -app-input-placeholder: rgba(220, 252, 231, 0.56);
+  -app-field-label: rgba(220, 252, 231, 0.90);
+  -app-mark: #34d399;
+  -app-button-start: linear-gradient(to right, #34d399, #bef264);
+  -app-button-start-text: #03120a;
+  -app-glow: rgba(52, 211, 153, 0.48);
+  -app-log-bg: rgba(6, 22, 16, 0.94);
+  -app-log-text: #dcfce7;
+  -app-log-scroll-track: rgba(110, 231, 183, 0.16);
+  -app-log-scroll-thumb: rgba(110, 231, 183, 0.52);
+  -app-log-scroll-thumb-hover: rgba(220, 252, 231, 0.76);
+  -app-popup-hover-bg: rgba(110, 231, 183, 0.20);
+  -app-switch-chip-bg: rgba(8, 26, 18, 0.44);
+}
+
+.app-root.theme-amber {
+  -fx-background-color:
+    radial-gradient(center 18% 15%, radius 58%, rgba(251, 146, 60, 0.30), rgba(251, 146, 60, 0.0) 64%),
+    radial-gradient(center 78% 24%, radius 62%, rgba(245, 158, 11, 0.22), rgba(245, 158, 11, 0.0) 66%),
+    radial-gradient(center 74% 80%, radius 72%, rgba(239, 68, 68, 0.14), rgba(239, 68, 68, 0.0) 66%),
+    linear-gradient(to bottom right, #130804, #201007 46%, #2c170a 100%);
+  -app-card-bg: rgba(30, 14, 8, 0.72);
+  -app-card-border: rgba(251, 146, 60, 0.36);
+  -app-frame-bg: linear-gradient(to bottom right, rgba(35, 17, 9, 0.94), rgba(47, 24, 12, 0.84));
+  -app-frame-border: rgba(253, 186, 116, 0.32);
+  -app-slot-bg: rgba(255, 255, 255, 0.024);
+  -app-slot-border: rgba(253, 186, 116, 0.18);
+  -app-bar-gradient: linear-gradient(to top, #fb923c 0%, #f59e0b 58%, #fde047 100%);
+  -app-peak-color: rgba(255, 237, 160, 0.96);
+  -app-heading: #ffedd5;
+  -app-title: #fff7ed;
+  -app-sub: rgba(255, 237, 213, 0.86);
+  -app-input-bg: rgba(38, 19, 11, 0.96);
+  -app-input-border: rgba(251, 146, 60, 0.42);
+  -app-input-text: #ffedd5;
+  -app-input-placeholder: rgba(255, 237, 213, 0.58);
+  -app-field-label: rgba(255, 237, 213, 0.92);
+  -app-mark: #fb923c;
+  -app-button-start: linear-gradient(to right, #fb923c, #fde047);
+  -app-button-start-text: #2a1208;
+  -app-glow: rgba(251, 146, 60, 0.50);
+  -app-log-bg: rgba(32, 15, 8, 0.94);
+  -app-log-text: #ffedd5;
+  -app-log-scroll-track: rgba(253, 186, 116, 0.18);
+  -app-log-scroll-thumb: rgba(253, 186, 116, 0.58);
+  -app-log-scroll-thumb-hover: rgba(255, 237, 213, 0.78);
+  -app-popup-hover-bg: rgba(253, 186, 116, 0.22);
+  -app-switch-chip-bg: rgba(46, 23, 11, 0.46);
+}
+
+.app-root.theme-noir {
+  -fx-background-color:
+    radial-gradient(center 20% 12%, radius 62%, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.0) 66%),
+    radial-gradient(center 82% 18%, radius 64%, rgba(14, 165, 233, 0.14), rgba(14, 165, 233, 0.0) 68%),
+    linear-gradient(to bottom right, #06070b, #0a0d15 46%, #101522 100%);
+  -app-card-bg: rgba(10, 12, 20, 0.84);
+  -app-card-border: rgba(148, 163, 184, 0.32);
+  -app-frame-bg: linear-gradient(to bottom right, rgba(9, 11, 19, 0.96), rgba(14, 18, 30, 0.86));
+  -app-frame-border: rgba(148, 163, 184, 0.34);
+  -app-slot-bg: rgba(255, 255, 255, 0.03);
+  -app-slot-border: rgba(148, 163, 184, 0.18);
+  -app-bar-gradient: linear-gradient(to top, #38bdf8 0%, #a78bfa 48%, #fb7185 100%);
+  -app-peak-color: rgba(253, 224, 71, 0.90);
+  -app-heading: #e2e8f0;
+  -app-title: #f8fafc;
+  -app-sub: rgba(226, 232, 240, 0.82);
+  -app-input-bg: rgba(15, 18, 30, 0.96);
+  -app-input-border: rgba(148, 163, 184, 0.40);
+  -app-input-text: #e2e8f0;
+  -app-input-placeholder: rgba(226, 232, 240, 0.52);
+  -app-field-label: rgba(226, 232, 240, 0.90);
+  -app-mark: #f43f5e;
+  -app-button-start: linear-gradient(to right, #fb7185, #38bdf8);
+  -app-button-start-text: #0b1020;
+  -app-glow: rgba(244, 63, 94, 0.34);
+  -app-log-bg: rgba(9, 12, 20, 0.96);
+  -app-log-text: #e2e8f0;
+  -app-log-scroll-track: rgba(148, 163, 184, 0.16);
+  -app-log-scroll-thumb: rgba(148, 163, 184, 0.54);
+  -app-log-scroll-thumb-hover: rgba(226, 232, 240, 0.74);
+  -app-popup-hover-bg: rgba(148, 163, 184, 0.18);
+  -app-switch-chip-bg: rgba(10, 12, 20, 0.58);
+}
+
+.app-root.theme-paper {
+  -fx-background-color:
+    radial-gradient(center 14% 8%, radius 66%, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.0) 70%),
+    radial-gradient(center 88% 18%, radius 72%, rgba(56, 189, 248, 0.06), rgba(56, 189, 248, 0.0) 74%),
+    linear-gradient(to bottom right, #f6f8fb, #eef3f9 46%, #e8eef6 100%);
+  -app-card-bg: rgba(255, 255, 255, 0.92);
+  -app-card-border: rgba(71, 85, 105, 0.24);
+  -app-frame-bg: linear-gradient(to bottom right, rgba(255, 255, 255, 0.96), rgba(244, 248, 254, 0.94));
+  -app-frame-border: rgba(71, 85, 105, 0.24);
+  -app-slot-bg: rgba(148, 163, 184, 0.07);
+  -app-slot-border: rgba(100, 116, 139, 0.12);
+  -app-bar-gradient: linear-gradient(to top, #3b82f6 0%, #22d3ee 58%, #34d399 100%);
+  -app-peak-color: rgba(2, 132, 199, 0.90);
+  -app-heading: #0b1220;
+  -app-title: #020617;
+  -app-sub: rgba(11, 18, 32, 0.84);
+  -app-input-bg: rgba(255, 255, 255, 0.97);
+  -app-input-border: rgba(71, 85, 105, 0.40);
+  -app-input-text: #0b1220;
+  -app-input-placeholder: rgba(11, 18, 32, 0.54);
+  -app-field-label: rgba(11, 18, 32, 0.96);
+  -app-mark: #2563eb;
+  -app-button-start: linear-gradient(to right, #2563eb, #0ea5e9);
+  -app-button-start-text: #f8fafc;
+  -app-glow: rgba(37, 99, 235, 0.18);
+  -app-log-bg: rgba(251, 253, 255, 0.98);
+  -app-log-text: #0b1220;
+  -app-log-scroll-track: rgba(148, 163, 184, 0.22);
+  -app-log-scroll-thumb: rgba(71, 85, 105, 0.52);
+  -app-log-scroll-thumb-hover: rgba(30, 41, 59, 0.68);
+  -app-popup-hover-bg: rgba(148, 163, 184, 0.16);
+  -app-switch-chip-bg: rgba(255, 255, 255, 0.86);
+}
+
+.app-root.theme-arcade {
+  -fx-background-color:
+    radial-gradient(center 16% 10%, radius 64%, rgba(34, 211, 238, 0.18), rgba(34, 211, 238, 0.0) 66%),
+    radial-gradient(center 84% 18%, radius 64%, rgba(244, 114, 182, 0.16), rgba(244, 114, 182, 0.0) 68%),
+    radial-gradient(center 74% 84%, radius 72%, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.0) 70%),
+    linear-gradient(to bottom right, #0a1022, #101a35 48%, #182647 100%);
+  -app-card-bg: rgba(15, 24, 46, 0.80);
+  -app-card-border: rgba(125, 211, 252, 0.36);
+  -app-frame-bg: linear-gradient(to bottom right, rgba(16, 27, 52, 0.94), rgba(22, 37, 69, 0.84));
+  -app-frame-border: rgba(125, 211, 252, 0.40);
+  -app-slot-bg: rgba(255, 255, 255, 0.04);
+  -app-slot-border: rgba(125, 211, 252, 0.24);
+  -app-bar-gradient: linear-gradient(to top, #22d3ee 0%, #60a5fa 52%, #f472b6 100%);
+  -app-peak-color: rgba(224, 242, 254, 0.96);
+  -app-heading: #eff6ff;
+  -app-title: #f8fafc;
+  -app-sub: rgba(224, 242, 254, 0.84);
+  -app-input-bg: rgba(19, 31, 58, 0.95);
+  -app-input-border: rgba(125, 211, 252, 0.42);
+  -app-input-text: #e0f2fe;
+  -app-input-placeholder: rgba(224, 242, 254, 0.54);
+  -app-field-label: rgba(239, 246, 255, 0.90);
+  -app-mark: #22d3ee;
+  -app-button-start: linear-gradient(to right, #22d3ee, #60a5fa, #f472b6);
+  -app-button-start-text: #07111f;
+  -app-glow: rgba(34, 211, 238, 0.30);
+  -app-log-bg: rgba(14, 24, 46, 0.96);
+  -app-log-text: #e0f2fe;
+  -app-log-scroll-track: rgba(125, 211, 252, 0.18);
+  -app-log-scroll-thumb: rgba(125, 211, 252, 0.50);
+  -app-log-scroll-thumb-hover: rgba(224, 242, 254, 0.78);
+  -app-popup-hover-bg: rgba(125, 211, 252, 0.20);
+  -app-switch-chip-bg: rgba(18, 30, 56, 0.56);
+}
+
+.header-title {
+  -fx-font-size: 24px;
+  -fx-font-weight: 900;
+  -fx-letter-spacing: 0.3px;
+  -fx-text-fill: -app-title;
+}
+
+.header-subtitle {
+  -fx-font-size: 13px;
+  -fx-text-fill: -app-sub;
+}
+
+.section-title {
+  -fx-font-size: 15px;
+  -fx-font-weight: 800;
+  -fx-text-fill: -app-heading;
+}
+
+.subsection-title {
+  -fx-font-size: 12px;
+  -fx-font-weight: 800;
+  -fx-letter-spacing: 0.2px;
+  -fx-text-fill: -app-heading;
+}
+
+.field-label {
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-text-fill: -app-field-label;
+}
+
+.status-label {
+  -fx-font-size: 12px;
+  -fx-text-fill: -app-sub;
+  -fx-font-family: "Menlo", "Consolas", monospace;
+  -fx-font-weight: 700;
+}
+
+.chip-label {
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-text-fill: -app-field-label;
+}
+
+.intensity-chip {
+  -fx-padding: 0;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
+#effectIntensityBar {
+  -fx-max-width: 220px;
+  -fx-min-width: 220px;
+  -fx-pref-width: 220px;
+}
+
+.intensity-value {
+  -fx-font-family: "Menlo", "Consolas", monospace;
+  -fx-font-weight: 700;
+  -fx-text-fill: -app-sub;
+  -fx-min-width: 42px;
+  -fx-pref-width: 42px;
+  -fx-max-width: 42px;
+  -fx-alignment: center-right;
+}
+
+.intensity-chip .slider {
+  -fx-padding: 0;
+}
+
+.intensity-chip .slider .track {
+  -fx-background-color: -app-input-border;
+  -fx-background-radius: 999;
+  -fx-pref-height: 2.5px;
+}
+
+.intensity-chip .slider .thumb {
+  -fx-background-color: -app-mark;
+  -fx-background-radius: 999;
+  -fx-pref-width: 10px;
+  -fx-pref-height: 10px;
+}
+
+.card {
+  -fx-background-color: -app-card-bg;
+  -fx-background-radius: 18;
+  -fx-border-color: -app-card-border;
+  -fx-border-radius: 18;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 24, 0.18, 0, 10);
+}
+
+.top-chip {
+  -fx-padding: 6 8;
+  -fx-background-color: -app-card-bg;
+  -fx-background-radius: 12;
+  -fx-border-color: -app-input-border;
+  -fx-border-radius: 12;
+}
+
+.app-root.theme-noir .card {
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-border-width: 1.4;
+  -fx-effect: dropshadow(gaussian, rgba(2, 6, 23, 0.68), 18, 0.12, 0, 6);
+}
+
+.app-root.theme-noir .top-chip {
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+}
+
+.app-root.theme-paper .card {
+  -fx-background-radius: 12;
+  -fx-border-radius: 12;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.06), 12, 0.08, 0, 2);
+}
+
+.app-root.theme-paper .top-chip {
+  -fx-background-color: rgba(255, 255, 255, 0.96);
+  -fx-border-color: rgba(71, 85, 105, 0.24);
+  -fx-background-radius: 9;
+  -fx-border-radius: 9;
+}
+
+.app-root.theme-paper .field-label,
+.app-root.theme-paper .chip-label {
+  -fx-font-weight: 800;
+}
+
+.app-root.theme-arcade .card {
+  -fx-background-radius: 18;
+  -fx-border-radius: 18;
+  -fx-border-width: 1.3;
+  -fx-effect: dropshadow(gaussian, rgba(14, 116, 144, 0.24), 20, 0.14, 0, 7);
+}
+
+.app-root.theme-arcade .top-chip {
+  -fx-background-radius: 12;
+  -fx-border-radius: 12;
+  -fx-border-width: 1.2;
+}
+
+.spectrum-frame {
+  -fx-background-color: -app-frame-bg;
+  -fx-background-radius: 16;
+  -fx-border-color: -app-frame-border;
+  -fx-border-radius: 16;
+  -fx-effect: none;
+}
+
+.app-root.theme-noir .spectrum-frame {
+  -fx-background-radius: 6;
+  -fx-border-radius: 6;
+  -fx-border-width: 1.4;
+}
+
+.app-root.theme-paper .spectrum-frame {
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-border-width: 1;
+}
+
+.app-root.theme-arcade .spectrum-frame {
+  -fx-background-radius: 16;
+  -fx-border-radius: 16;
+  -fx-border-width: 1.4;
+}
+
+.spectrum-frame.spectrum-energy-soft {
+  -fx-border-width: 1;
+}
+
+.spectrum-frame.spectrum-energy-mid {
+  -fx-border-width: 1.2;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-energy-hard {
+  -fx-border-width: 1.5;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-smooth {
+  -fx-background-radius: 18;
+  -fx-border-radius: 18;
+}
+
+.spectrum-frame.spectrum-style-punch {
+  -fx-background-radius: 13;
+  -fx-border-radius: 13;
+  -fx-border-width: 1.3;
+}
+
+.spectrum-frame.spectrum-style-neon {
+  -fx-background-radius: 20;
+  -fx-border-radius: 20;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-crystal {
+  -fx-background-radius: 12;
+  -fx-border-radius: 12;
+  -fx-border-width: 1.4;
+}
+
+.spectrum-frame.spectrum-style-retro {
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+  -fx-border-width: 1.5;
+}
+
+.spectrum-frame.spectrum-style-mecha {
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 1.6;
+}
+
+.spectrum-frame.spectrum-style-prism {
+  -fx-background-radius: 15;
+  -fx-border-radius: 15;
+  -fx-border-width: 1.2;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-wave {
+  -fx-background-radius: 24;
+  -fx-border-radius: 24;
+  -fx-border-width: 1.2;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-fusion {
+  -fx-background-radius: 6;
+  -fx-border-radius: 6;
+  -fx-border-width: 1.7;
+  -fx-effect: none;
+}
+
+.spectrum-slot {
+  -fx-background-color: -app-slot-bg;
+  -fx-background-radius: 10;
+  -fx-border-color: -app-slot-border;
+  -fx-border-radius: 10;
+}
+
+.spectrum-slot.band-active {
+  -fx-background-color: rgba(255, 255, 255, 0.06);
+}
+
+.spectrum-slot.band-hot {
+  -fx-background-color: rgba(255, 255, 255, 0.09);
+  -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+.spectrum-frame.spectrum-style-punch .spectrum-slot {
+  -fx-background-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.025));
+  -fx-background-radius: 6;
+  -fx-border-color: rgba(148, 163, 184, 0.24);
+  -fx-border-radius: 6;
+}
+
+.spectrum-frame.spectrum-style-neon .spectrum-slot {
+  -fx-background-color: rgba(7, 12, 24, 0.6);
+  -fx-background-radius: 14;
+  -fx-border-color: rgba(125, 211, 252, 0.3);
+  -fx-border-radius: 14;
+}
+
+.spectrum-frame.spectrum-style-crystal .spectrum-slot {
+  -fx-background-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02));
+  -fx-background-radius: 7;
+  -fx-border-color: rgba(148, 163, 184, 0.28);
+  -fx-border-radius: 7;
+}
+
+.spectrum-frame.spectrum-style-retro .spectrum-slot {
+  -fx-background-color: rgba(0, 0, 0, 0.28);
+  -fx-background-radius: 3;
+  -fx-border-color: rgba(251, 191, 36, 0.22);
+  -fx-border-radius: 3;
+}
+
+.spectrum-frame.spectrum-style-mecha .spectrum-slot {
+  -fx-background-color: rgba(15, 23, 42, 0.32);
+  -fx-background-radius: 2;
+  -fx-border-color: rgba(148, 163, 184, 0.36);
+  -fx-border-radius: 2;
+}
+
+.spectrum-frame.spectrum-style-prism .spectrum-slot {
+  -fx-background-color: rgba(125, 211, 252, 0.08);
+  -fx-background-radius: 10;
+  -fx-border-color: rgba(125, 211, 252, 0.28);
+  -fx-border-radius: 10;
+}
+
+.spectrum-frame.spectrum-style-wave .spectrum-slot {
+  -fx-background-color: rgba(30, 41, 59, 0.34);
+  -fx-background-radius: 999;
+  -fx-border-color: rgba(148, 163, 184, 0.24);
+  -fx-border-radius: 999;
+}
+
+.spectrum-frame.spectrum-style-fusion .spectrum-slot {
+  -fx-background-color: rgba(251, 146, 60, 0.08);
+  -fx-background-radius: 4;
+  -fx-border-color: rgba(251, 146, 60, 0.26);
+  -fx-border-radius: 4;
+}
+
+.spectrum-bar {
+  -fx-background-radius: 7;
+  -fx-background-insets: 0;
+  -fx-background-color: -app-bar-gradient;
+  -fx-effect: none;
+}
+
+.spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, rgba(34, 211, 238, 0.65), rgba(34, 211, 238, 0.98));
+}
+
+.spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, rgba(163, 230, 53, 0.64), rgba(163, 230, 53, 0.98));
+}
+
+.spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, rgba(251, 146, 60, 0.66), rgba(251, 146, 60, 0.98));
+}
+
+.spectrum-frame.spectrum-style-smooth .spectrum-bar {
+  -fx-background-radius: 10;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-punch .spectrum-bar {
+  -fx-background-radius: 3;
+  -fx-background-insets: 0;
+  -fx-border-color: rgba(226, 232, 240, 0.28);
+  -fx-border-width: 1;
+  -fx-border-radius: 3;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-neon .spectrum-bar {
+  -fx-background-radius: 999;
+  -fx-background-insets: 0;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-crystal .spectrum-bar {
+  -fx-background-radius: 4;
+  -fx-background-insets: 0;
+  -fx-border-color: rgba(255, 255, 255, 0.18);
+  -fx-border-width: 1;
+  -fx-border-radius: 4;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-retro .spectrum-bar {
+  -fx-background-radius: 1;
+  -fx-background-insets: 0;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-mecha .spectrum-bar {
+  -fx-background-radius: 2;
+  -fx-background-insets: 0;
+  -fx-border-color: rgba(226, 232, 240, 0.30);
+  -fx-border-width: 1;
+  -fx-border-radius: 2;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-prism .spectrum-bar {
+  -fx-background-radius: 4;
+  -fx-background-insets: 0;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-wave .spectrum-bar {
+  -fx-background-radius: 999;
+  -fx-background-insets: 0;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-fusion .spectrum-bar {
+  -fx-background-radius: 1;
+  -fx-background-insets: 0;
+  -fx-effect: none;
+}
+
+.app-root.theme-electro .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, rgba(16, 185, 129, 0.70), rgba(52, 211, 153, 0.98));
+}
+
+.app-root.theme-electro .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, rgba(132, 204, 22, 0.70), rgba(163, 230, 53, 0.98));
+}
+
+.app-root.theme-electro .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, rgba(45, 212, 191, 0.70), rgba(94, 234, 212, 0.98));
+}
+
+.app-root.theme-amber .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, rgba(251, 146, 60, 0.70), rgba(253, 186, 116, 0.98));
+}
+
+.app-root.theme-amber .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, rgba(245, 158, 11, 0.72), rgba(251, 191, 36, 0.98));
+}
+
+.app-root.theme-amber .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, rgba(249, 115, 22, 0.70), rgba(253, 224, 71, 0.98));
+}
+
+.spectrum-frame.spectrum-style-punch .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, #0f667c 0%, #1bb8d5 54%, #67e8f9 100%);
+}
+
+.spectrum-frame.spectrum-style-punch .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, #507f22 0%, #89c631 54%, #bef264 100%);
+}
+
+.spectrum-frame.spectrum-style-punch .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, #9a5a18 0%, #d78630 56%, #fdba74 100%);
+}
+
+.spectrum-frame.spectrum-style-neon .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, rgba(34, 211, 238, 0.26), rgba(34, 211, 238, 0.82) 48%, rgba(125, 211, 252, 0.99));
+}
+
+.spectrum-frame.spectrum-style-neon .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, rgba(163, 230, 53, 0.26), rgba(163, 230, 53, 0.84) 48%, rgba(217, 249, 157, 0.99));
+}
+
+.spectrum-frame.spectrum-style-neon .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, rgba(251, 146, 60, 0.26), rgba(251, 146, 60, 0.84) 50%, rgba(254, 215, 170, 0.99));
+}
+
+.spectrum-frame.spectrum-style-crystal .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, #0ea5e9 0%, #67e8f9 100%);
+}
+
+.spectrum-frame.spectrum-style-crystal .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, #84cc16 0%, #d9f99d 100%);
+}
+
+.spectrum-frame.spectrum-style-crystal .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, #f59e0b 0%, #fed7aa 100%);
+}
+
+.spectrum-frame.spectrum-style-retro .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, #1d4ed8 0%, #22d3ee 100%);
+}
+
+.spectrum-frame.spectrum-style-retro .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, #65a30d 0%, #bef264 100%);
+}
+
+.spectrum-frame.spectrum-style-retro .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, #b45309 0%, #f59e0b 100%);
+}
+
+.spectrum-frame.spectrum-style-mecha .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, #0369a1 0%, #0ea5e9 100%);
+}
+
+.spectrum-frame.spectrum-style-mecha .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, #4d7c0f 0%, #84cc16 100%);
+}
+
+.spectrum-frame.spectrum-style-mecha .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, #b45309 0%, #fb923c 100%);
+}
+
+.spectrum-frame.spectrum-style-prism .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, #0ea5e9 0%, #7dd3fc 48%, #bae6fd 100%);
+}
+
+.spectrum-frame.spectrum-style-prism .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, #10b981 0%, #34d399 50%, #a7f3d0 100%);
+}
+
+.spectrum-frame.spectrum-style-prism .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, #f59e0b 0%, #fbbf24 52%, #fde68a 100%);
+}
+
+.spectrum-frame.spectrum-style-wave .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, rgba(56, 189, 248, 0.22), rgba(125, 211, 252, 0.72), rgba(186, 230, 253, 0.98));
+}
+
+.spectrum-frame.spectrum-style-wave .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, rgba(45, 212, 191, 0.22), rgba(94, 234, 212, 0.72), rgba(153, 246, 228, 0.98));
+}
+
+.spectrum-frame.spectrum-style-wave .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, rgba(251, 146, 60, 0.24), rgba(253, 186, 116, 0.74), rgba(254, 215, 170, 0.98));
+}
+
+.spectrum-frame.spectrum-style-fusion .spectrum-bar.band-low {
+  -fx-background-color: linear-gradient(to top, #0f172a 0%, #0369a1 55%, #22d3ee 100%);
+}
+
+.spectrum-frame.spectrum-style-fusion .spectrum-bar.band-mid {
+  -fx-background-color: linear-gradient(to top, #1f2937 0%, #4d7c0f 52%, #bef264 100%);
+}
+
+.spectrum-frame.spectrum-style-fusion .spectrum-bar.band-high {
+  -fx-background-color: linear-gradient(to top, #431407 0%, #b45309 55%, #fb923c 100%);
+}
+
+.spectrum-peak {
+  -fx-background-radius: 3;
+  -fx-background-color: -app-peak-color;
+  -fx-effect: none;
+}
+
+.spectrum-peak.band-low {
+  -fx-background-color: rgba(125, 211, 252, 0.95);
+}
+
+.spectrum-peak.band-mid {
+  -fx-background-color: rgba(190, 242, 100, 0.95);
+}
+
+.spectrum-peak.band-high {
+  -fx-background-color: rgba(254, 215, 170, 0.96);
+}
+
+.app-root.theme-electro .spectrum-peak.band-low {
+  -fx-background-color: rgba(110, 231, 183, 0.96);
+}
+
+.app-root.theme-electro .spectrum-peak.band-mid {
+  -fx-background-color: rgba(190, 242, 100, 0.96);
+}
+
+.app-root.theme-electro .spectrum-peak.band-high {
+  -fx-background-color: rgba(153, 246, 228, 0.96);
+}
+
+.app-root.theme-amber .spectrum-peak.band-low {
+  -fx-background-color: rgba(253, 186, 116, 0.96);
+}
+
+.app-root.theme-amber .spectrum-peak.band-mid {
+  -fx-background-color: rgba(252, 211, 77, 0.96);
+}
+
+.app-root.theme-amber .spectrum-peak.band-high {
+  -fx-background-color: rgba(254, 243, 199, 0.98);
+}
+
+.spectrum-frame.spectrum-style-smooth .spectrum-peak {
+  -fx-pref-height: 2;
+  -fx-max-height: 2;
+  -fx-background-radius: 999;
+}
+
+.spectrum-frame.spectrum-style-punch .spectrum-peak {
+  -fx-pref-height: 3;
+  -fx-max-height: 3;
+  -fx-background-radius: 1;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-neon .spectrum-peak {
+  -fx-pref-height: 2;
+  -fx-max-height: 2;
+  -fx-background-radius: 999;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-crystal .spectrum-peak {
+  -fx-pref-height: 2;
+  -fx-max-height: 2;
+  -fx-background-radius: 2;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-retro .spectrum-peak {
+  -fx-pref-height: 4;
+  -fx-max-height: 4;
+  -fx-background-radius: 0;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-mecha .spectrum-peak {
+  -fx-pref-height: 3;
+  -fx-max-height: 3;
+  -fx-background-radius: 1;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-prism .spectrum-peak {
+  -fx-pref-height: 2;
+  -fx-max-height: 2;
+  -fx-background-radius: 3;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-wave .spectrum-peak {
+  -fx-pref-height: 2;
+  -fx-max-height: 2;
+  -fx-background-radius: 999;
+  -fx-effect: none;
+}
+
+.spectrum-frame.spectrum-style-fusion .spectrum-peak {
+  -fx-pref-height: 3;
+  -fx-max-height: 3;
+  -fx-background-radius: 1;
+  -fx-effect: none;
+}
+
+.app-root .text-field,
+.app-root .combo-box-base {
+  -fx-background-color: -app-input-bg;
+  -fx-border-color: -app-input-border;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+  -fx-font-size: 11px;
+  -fx-pref-height: 28px;
+  -fx-min-height: 28px;
+  -fx-max-height: 28px;
+}
+
+.app-root.theme-noir .text-field,
+.app-root.theme-noir .combo-box-base {
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 1.2;
+}
+
+.app-root.theme-paper .text-field,
+.app-root.theme-paper .combo-box-base {
+  -fx-background-radius: 7;
+  -fx-border-radius: 7;
+}
+
+.app-root.theme-arcade .text-field,
+.app-root.theme-arcade .combo-box-base {
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-border-width: 1.2;
+}
+
+.app-root .text-field {
+  -fx-text-fill: -app-input-text;
+  -fx-prompt-text-fill: -app-input-placeholder;
+  -fx-padding: 7 9;
+}
+
+.app-root .combo-box {
+  -fx-mark-color: -app-mark;
+}
+
+.app-root .combo-box-base:editable > .text-field {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-text-fill: -app-input-text;
+  -fx-prompt-text-fill: -app-input-placeholder;
+  -fx-background-radius: 10 0 0 10;
+  -fx-padding: 7 9;
+}
+
+.app-root .combo-box-base > .arrow-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0 10 10 0;
+  -fx-border-color: transparent;
+  -fx-border-width: 0;
+  -fx-padding: 0 10;
+}
+
+.app-root .combo-box-base:hover > .arrow-button,
+.app-root .combo-box-base:showing > .arrow-button {
+  -fx-background-color: transparent;
+}
+
+.app-root .combo-box-base > .arrow-button > .arrow {
+  -fx-background-color: -app-mark;
+}
+
+.app-root .combo-box-base:hover > .arrow-button > .arrow,
+.app-root .combo-box-base:showing > .arrow-button > .arrow {
+  -fx-background-color: -app-heading;
+}
+
+.app-root .combo-box .list-cell {
+  -fx-text-fill: -app-input-text;
+  -fx-font-size: 11px;
+}
+
+.app-root .combo-box-popup .list-view {
+  -fx-background-color: -app-input-bg;
+  -fx-border-color: -app-input-border;
+}
+
+.app-root .combo-box-popup .list-cell {
+  -fx-background-color: transparent;
+  -fx-text-fill: -app-input-text;
+}
+
+.app-root .combo-box-popup .list-cell:hover,
+.app-root .combo-box-popup .list-cell:filled:selected {
+  -fx-background-color: -app-popup-hover-bg;
+}
+
+.app-root .check-box {
+  -fx-font-size: 11px;
+  -fx-text-fill: -app-field-label;
+}
+
+.app-root .check-box > .box {
+  -fx-background-color: -app-input-bg;
+  -fx-border-color: -app-input-border;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+  -fx-background-insets: 0;
+}
+
+.app-root .check-box:selected > .box {
+  -fx-background-color: derive(-app-mark, -24%);
+  -fx-border-color: -app-mark;
+}
+
+.app-root .check-box > .box > .mark {
+  -fx-background-color: transparent;
+}
+
+.app-root .check-box:selected > .box > .mark {
+  -fx-background-color: -app-button-start-text;
+}
+
+.app-root .check-box:hover > .box {
+  -fx-border-color: -app-mark;
+}
+
+.app-root .text-field:focused,
+.app-root .combo-box-base:focused {
+  -fx-border-color: -app-mark;
+  -fx-effect: dropshadow(gaussian, -app-glow, 10, 0.1, 0, 0);
+}
+
+.switch-chip {
+  -fx-padding: 4 8;
+  -fx-background-color: -app-switch-chip-bg;
+  -fx-background-radius: 999;
+  -fx-border-color: -app-input-border;
+  -fx-border-radius: 999;
+}
+
+.app-root.theme-noir .switch-chip {
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+}
+
+.app-root.theme-noir .intensity-chip {
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+}
+
+.app-root.theme-paper .switch-chip {
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+}
+
+.app-root.theme-paper .intensity-chip {
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+}
+
+.app-root.theme-paper .switch-toggle .switch-track {
+  -fx-background-color: rgba(148, 163, 184, 0.55);
+}
+
+.app-root.theme-paper .switch-toggle .switch-thumb {
+  -fx-background-color: rgba(255, 255, 255, 0.98);
+  -fx-effect: dropshadow(gaussian, rgba(71, 85, 105, 0.28), 3, 0.12, 0, 1);
+}
+
+.app-root.theme-paper .switch-toggle .switch-graphic.on .switch-thumb {
+  -fx-background-color: rgba(8, 47, 73, 0.92);
+}
+
+.app-root.theme-arcade .switch-chip {
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+}
+
+.app-root.theme-arcade .intensity-chip {
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+}
+
+.switch-label {
+  -fx-font-size: 12px;
+  -fx-font-weight: 700;
+  -fx-text-fill: -app-heading;
+}
+
+.switch-toggle {
+  -fx-padding: 0;
+  -fx-pref-width: 38px;
+  -fx-min-width: 38px;
+  -fx-max-width: 38px;
+  -fx-pref-height: 20px;
+  -fx-min-height: 20px;
+  -fx-max-height: 20px;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-cursor: hand;
+}
+
+.switch-toggle .switch-graphic {
+  -fx-background-color: transparent;
+}
+
+.switch-toggle .switch-track {
+  -fx-background-color: rgba(71, 85, 105, 0.68);
+  -fx-border-color: -app-input-border;
+  -fx-border-radius: 999;
+  -fx-background-radius: 999;
+}
+
+.switch-toggle .switch-thumb {
+  -fx-background-color: rgba(241, 245, 249, 0.97);
+  -fx-background-radius: 999;
+  -fx-effect: dropshadow(gaussian, rgba(2, 6, 23, 0.55), 4, 0.18, 0, 1);
+}
+
+.switch-toggle .switch-graphic.on .switch-track {
+  -fx-background-color: -app-mark;
+  -fx-border-color: -app-mark;
+}
+
+.switch-toggle .switch-graphic.on .switch-thumb {
+  -fx-background-color: rgba(7, 11, 20, 0.95);
+}
+
+.switch-toggle:hover .switch-track {
+  -fx-effect: dropshadow(gaussian, -app-glow, 9, 0.14, 0, 0);
+}
+
+.switch-toggle:disabled,
+.switch-toggle:disabled + .switch-label {
+  -fx-opacity: 0.62;
+}
+
+#logVisibleCheck,
+#verboseCheck {
+  -fx-font-size: 12px;
+  -fx-font-weight: 700;
+}
+
+#logVisibleCheck,
+#verboseCheck {
+  -fx-label-padding: 0 0 0 3;
+}
+
+.app-root .button {
+  -fx-font-size: 12px;
+  -fx-font-weight: 800;
+  -fx-background-radius: 12;
+  -fx-padding: 8 14;
+}
+
+.app-root.theme-noir .button {
+  -fx-background-radius: 6;
+  -fx-border-radius: 6;
+}
+
+.app-root.theme-paper .button {
+  -fx-background-radius: 9;
+  -fx-border-radius: 9;
+  -fx-font-weight: 700;
+}
+
+.app-root.theme-arcade .button {
+  -fx-background-radius: 12;
+  -fx-border-radius: 12;
+  -fx-font-weight: 900;
+}
+
+#refreshButton,
+.refresh-button {
+  -fx-background-color: -app-input-bg;
+  -fx-text-fill: -app-heading;
+  -fx-border-color: -app-input-border;
+  -fx-border-width: 1;
+  -fx-border-radius: 12;
+  -fx-background-insets: 0;
+}
+
+#refreshButton:hover,
+.refresh-button:hover {
+  -fx-background-color: -app-card-bg;
+}
+
+#refreshButton:disabled,
+.refresh-button:disabled {
+  -fx-opacity: 0.68;
+}
+
+#refreshButton.refresh-icon-button,
+.refresh-icon-button {
+  -fx-min-width: 30px;
+  -fx-pref-width: 30px;
+  -fx-max-width: 30px;
+  -fx-min-height: 28px;
+  -fx-pref-height: 28px;
+  -fx-max-height: 28px;
+  -fx-padding: 0;
+  -fx-font-size: 16px;
+  -fx-font-weight: 900;
+}
+
+#refreshButton.refresh-icon-button-success,
+.refresh-icon-button-success {
+  -fx-background-color: rgba(16, 185, 129, 0.28);
+  -fx-border-color: rgba(52, 211, 153, 0.9);
+  -fx-text-fill: #d1fae5;
+}
+
+.refresh-status-label {
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-text-fill: rgba(94, 234, 212, 0.95);
+}
+
+.app-root .log-clear-button {
+  -fx-background-color: -app-card-bg;
+  -fx-text-fill: -app-field-label;
+  -fx-border-color: -app-input-border;
+  -fx-border-width: 1;
+  -fx-border-radius: 9;
+  -fx-background-radius: 9;
+  -fx-min-width: 56px;
+  -fx-pref-width: 56px;
+  -fx-max-width: 56px;
+  -fx-min-height: 24px;
+  -fx-pref-height: 24px;
+  -fx-max-height: 24px;
+  -fx-padding: 0 10;
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+}
+
+.app-root .log-clear-button:hover {
+  -fx-background-color: -app-popup-hover-bg;
+  -fx-border-color: -app-mark;
+  -fx-text-fill: -app-heading;
+}
+
+.app-root .log-clear-button:pressed {
+  -fx-background-color: -app-input-bg;
+}
+
+.app-root.theme-noir .log-clear-button {
+  -fx-border-radius: 6;
+  -fx-background-radius: 6;
+}
+
+.app-root.theme-paper .log-clear-button {
+  -fx-border-radius: 7;
+  -fx-background-radius: 7;
+}
+
+#startButton {
+  -fx-background-color: -app-button-start;
+  -fx-text-fill: -app-button-start-text;
+  -fx-font-weight: 900;
+  -fx-effect: dropshadow(gaussian, -app-glow, 16, 0.12, 0, 6);
+}
+
+#stopButton {
+  -fx-background-color: rgba(51, 65, 85, 0.55);
+  -fx-text-fill: -app-heading;
+  -fx-border-color: -app-input-border;
+  -fx-border-radius: 12;
+}
+
+.app-root .text-area,
+.app-root .log-area {
+  -fx-control-inner-background: -app-log-bg;
+  -fx-text-fill: -app-log-text;
+  -fx-highlight-fill: -app-mark;
+  -fx-highlight-text-fill: -app-button-start-text;
+  -fx-font-family: "Menlo";
+  -fx-font-size: 12px;
+  -fx-background-color: -app-log-bg;
+  -fx-background-insets: 0;
+  -fx-background-radius: 14;
+  -fx-border-radius: 14;
+  -fx-text-box-border: -app-input-border;
+  -fx-focus-color: -app-mark;
+  -fx-faint-focus-color: transparent;
+  -fx-border-color: -app-input-border;
+}
+
+.app-root .text-area .scroll-pane,
+.app-root .text-area .viewport,
+.app-root .text-area .content,
+.app-root .text-area .scroll-pane .corner,
+.app-root .log-area .scroll-pane,
+.app-root .log-area .viewport,
+.app-root .log-area .content,
+.app-root .log-area .scroll-pane .corner {
+  -fx-background-color: -app-log-bg;
+  -fx-background-insets: 0;
+  -fx-background-radius: 14;
+}
+
+.app-root .text-area .scroll-bar:vertical {
+  -fx-background-color: transparent;
+  -fx-pref-width: 11px;
+  -fx-padding: 2 2 2 0;
+}
+
+.app-root .text-area .scroll-bar:vertical .track {
+  -fx-background-color: -app-log-scroll-track;
+  -fx-background-radius: 8;
+}
+
+.app-root .text-area .scroll-bar:vertical .thumb {
+  -fx-background-color: -app-log-scroll-thumb;
+  -fx-background-radius: 8;
+}
+
+.app-root .text-area .scroll-bar:vertical .thumb:hover,
+.app-root .text-area .scroll-bar:vertical .thumb:pressed {
+  -fx-background-color: -app-log-scroll-thumb-hover;
+}
+
+.app-root .text-area .scroll-bar .increment-button,
+.app-root .text-area .scroll-bar .decrement-button {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+}
+
+.app-root .text-area .scroll-bar .increment-arrow,
+.app-root .text-area .scroll-bar .decrement-arrow {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+}
