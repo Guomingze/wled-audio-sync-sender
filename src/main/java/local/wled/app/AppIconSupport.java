@@ -18,8 +18,12 @@ import java.awt.RenderingHints;
 import java.awt.Taskbar;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 final class AppIconSupport {
+  private static final Logger LOG = Logger.getLogger(AppIconSupport.class.getName());
+
   private AppIconSupport() {
   }
 
@@ -37,7 +41,8 @@ final class AppIconSupport {
       if (app != null) {
         glassApplication.getMethod("setName", String.class).invoke(app, appName);
       }
-    } catch (Exception ignored) {
+    } catch (ReflectiveOperationException | RuntimeException e) {
+      LOG.log(Level.FINE, "Unable to set JavaFX application name via Glass API", e);
     }
   }
 
@@ -95,7 +100,8 @@ final class AppIconSupport {
         return;
       }
       taskbar.setIconImage(createAwtIcon(256));
-    } catch (Exception ignored) {
+    } catch (RuntimeException e) {
+      LOG.log(Level.FINE, "Unable to apply dock icon via AWT Taskbar API", e);
     }
   }
 

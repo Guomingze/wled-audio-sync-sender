@@ -4,6 +4,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.TargetDataLine;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public final class AudioDeviceCatalog {
   }
 
   public static List<String> listCaptureDeviceNames() {
-    List<String> out = new ArrayList<String>();
+    List<String> out = new ArrayList<>();
     Mixer.Info[] infos = AudioSystem.getMixerInfo();
     for (Mixer.Info mi : infos) {
       Mixer m = AudioSystem.getMixer(mi);
@@ -37,7 +38,7 @@ public final class AudioDeviceCatalog {
   }
 
   static InputSelection openTargetLine(AudioFormat format, String query) {
-    List<Mixer.Info> matches = new ArrayList<Mixer.Info>();
+    List<Mixer.Info> matches = new ArrayList<>();
     for (Mixer.Info mi : AudioSystem.getMixerInfo()) {
       Mixer m = AudioSystem.getMixer(mi);
       if (!supportsTargetDataLine(m, format)) {
@@ -60,7 +61,7 @@ public final class AudioDeviceCatalog {
       int bufferSize = format.getFrameSize() * OPEN_BUFFER_FRAMES * 2;
       line.open(format, bufferSize);
       return new InputSelection(line, picked.getName(), picked.getDescription());
-    } catch (Exception e) {
+    } catch (LineUnavailableException | IllegalArgumentException | SecurityException e) {
       throw new IllegalStateException("无法打开输入设备: " + picked.getName(), e);
     }
   }

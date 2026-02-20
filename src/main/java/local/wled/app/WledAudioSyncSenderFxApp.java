@@ -7,22 +7,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class WledAudioSyncSenderFxApp extends Application {
-  private static Args bootstrapArgs;
-
   private WledAudioSyncSenderFxController controller;
-
-  static void bootstrap(Args args) {
-    bootstrapArgs = args;
-  }
 
   @Override
   public void start(Stage stage) {
-    Args args = bootstrapArgs;
-    if (args == null) {
-      args = Args.parse(new String[0]);
-    }
+    Args args = resolveLaunchArgs();
 
     FXMLLoader loader = new FXMLLoader(WledAudioSyncSenderFxApp.class.getResource("/wled-audio-sync.fxml"));
     Parent root;
@@ -56,5 +49,10 @@ public class WledAudioSyncSenderFxApp extends Application {
       throw new IllegalStateException("缺少资源文件: " + path);
     }
     return url.toExternalForm();
+  }
+
+  private Args resolveLaunchArgs() {
+    List<String> raw = getParameters() == null ? Collections.emptyList() : getParameters().getRaw();
+    return Args.parse(raw.toArray(new String[0]));
   }
 }

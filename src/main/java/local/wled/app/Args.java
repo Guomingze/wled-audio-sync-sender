@@ -73,8 +73,8 @@ final class Args {
   }
 
   static Args parse(String[] argv) {
-    Map<String, String> kv = new HashMap<String, String>();
-    Set<String> flags = new HashSet<String>();
+    Map<String, String> kv = new HashMap<>();
+    Set<String> flags = new HashSet<>();
 
     for (int i = 0; i < argv.length; i++) {
       String a = argv[i];
@@ -173,9 +173,12 @@ final class Args {
   }
 
   private static int parseInt(String s, int def) {
+    if (s == null) {
+      return def;
+    }
     try {
-      return Integer.parseInt(s);
-    } catch (Exception e) {
+      return Integer.parseInt(s.trim());
+    } catch (NumberFormatException e) {
       return def;
     }
   }

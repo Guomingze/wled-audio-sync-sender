@@ -237,7 +237,7 @@ public final class WledAudioSyncSenderFxController {
   private Timeline refreshFeedbackTimeline;
   private Timeline refreshResultTimeline;
   private final Tooltip refreshTooltip = new Tooltip("刷新输入设备列表");
-  private final Map<ToggleButton, SwitchVisual> switchVisuals = new HashMap<ToggleButton, SwitchVisual>();
+  private final Map<ToggleButton, SwitchVisual> switchVisuals = new HashMap<>();
 
   private Stage stage;
   private double initialWindowWidth = 980.0;
@@ -778,7 +778,7 @@ public final class WledAudioSyncSenderFxController {
     }
     try {
       return Integer.parseInt(s.trim());
-    } catch (Exception e) {
+    } catch (NumberFormatException e) {
       return def;
     }
   }
@@ -950,10 +950,6 @@ public final class WledAudioSyncSenderFxController {
         peak,
         majorPeakHz,
         magnitude);
-  }
-
-  private double currentSpectrumHeight() {
-    return logVisibleCheck != null && !logVisibleCheck.isSelected() ? SPECTRUM_HEIGHT_NO_LOG : SPECTRUM_HEIGHT_WITH_LOG;
   }
 
   private void applyTheme(String themeName) {

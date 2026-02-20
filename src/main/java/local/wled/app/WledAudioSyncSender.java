@@ -33,7 +33,6 @@ public final class WledAudioSyncSender {
       return;
     }
 
-    WledAudioSyncSenderFxApp.bootstrap(parsed);
     Application.launch(WledAudioSyncSenderFxApp.class, parsed.rawArgs);
   }
 

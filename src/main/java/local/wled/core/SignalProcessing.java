@@ -19,10 +19,7 @@ final class SignalProcessing {
 
   static DatagramSocket createMulticastSender() throws IOException {
     MulticastSocket ms = new MulticastSocket();
-    try {
-      ms.setTimeToLive(1);
-    } catch (Exception ignored) {
-    }
+    ms.setTimeToLive(1);
     return ms;
   }
 

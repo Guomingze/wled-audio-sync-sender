@@ -18,3 +18,7 @@ release/
 
 # Compiled bytecode
 *.class
+*.classpath
+*.project
+*.prefs
+/oh-my-opencode.json

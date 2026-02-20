@@ -2,6 +2,7 @@ package local.wled.core;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.TargetDataLine;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -48,9 +49,9 @@ public final class SenderController {
     this.captureEnabled = new AtomicBoolean(config.captureEnabled);
     this.pushEnabled = new AtomicBoolean(config.pushEnabled);
     this.verboseEnabled = new AtomicBoolean(config.verbose);
-    this.activeDdpLayoutMode = new AtomicReference<DdpLayoutMode>(config.ddpLayoutMode);
-    this.activeDdpColorPalette = new AtomicReference<DdpColorPalette>(config.ddpColorPalette);
-    this.activePushTarget = new AtomicReference<PushTarget>(new PushTarget(config.dest, config.port));
+    this.activeDdpLayoutMode = new AtomicReference<>(config.ddpLayoutMode);
+    this.activeDdpColorPalette = new AtomicReference<>(config.ddpColorPalette);
+    this.activePushTarget = new AtomicReference<>(new PushTarget(config.dest, config.port));
   }
 
   public void setCaptureEnabled(boolean enabled) {
@@ -145,7 +146,7 @@ public final class SenderController {
   }
 
   private void runLoop() {
-    BlockingQueue<OutboundFrame> queue = new ArrayBlockingQueue<OutboundFrame>(1);
+    BlockingQueue<OutboundFrame> queue = new ArrayBlockingQueue<>(1);
     try {
       AudioFormat format = new AudioFormat((float) config.sampleRate, 16, config.channels, true, false);
       InputSelection input = AudioDeviceCatalog.openTargetLine(format, config.inputDeviceQuery);
@@ -379,7 +380,7 @@ public final class SenderController {
             nextRetryAtNanos = 0L;
             retryDelayMillis = PUSH_RETRY_BASE_MILLIS;
           }
-        } catch (Exception sendError) {
+        } catch (IOException | IllegalArgumentException | SecurityException sendError) {
           if (stopRequested.get()) {
             break;
           }
@@ -469,13 +470,11 @@ public final class SenderController {
     if (line == null) {
       return;
     }
-    try {
+    if (line.isRunning()) {
       line.stop();
-    } catch (Exception ignored) {
     }
-    try {
+    if (line.isOpen()) {
       line.close();
-    } catch (Exception ignored) {
     }
   }
 
