@@ -6,6 +6,7 @@ APP_NAME="WLED音频同步发送器"
 APP_ID="local.wled.app"
 BUILD_APP="target/dist/$APP_NAME.app"
 INSTALL_APP="/Applications/$APP_NAME.app"
+APP_ICON_ICNS="target/dist/$APP_NAME.icns"
 
 JAVA_HOME="${JAVA_HOME:-$(/usr/libexec/java_home -v 21)}"
 export JAVA_HOME
@@ -15,6 +16,8 @@ cd "$ROOT_DIR"
 "$JAVA_HOME/bin/java" -version >/dev/null
 
 mvn -q -DskipTests package dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=target/app-libs
+
+python3 scripts/generate-macos-icon.py --output "$APP_ICON_ICNS" --workdir target/dist
 
 APP_JAR=""
 for jar in target/wled-audio-sync-sender-*.jar; do
@@ -37,6 +40,7 @@ jpackage \
   --dest target/dist \
   --input target/app-libs \
   --name "$APP_NAME" \
+  --icon "$APP_ICON_ICNS" \
   --main-jar "$(basename "$APP_JAR")" \
   --main-class local.wled.app.WledAudioSyncSender \
   --java-options "-Xdock:name=$APP_NAME" \

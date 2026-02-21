@@ -31,7 +31,7 @@ public class WledAudioSyncSenderFxApp extends Application {
     Scene scene = new Scene(root, controller.getInitialWindowWidth(), controller.getInitialWindowHeight());
     scene.getStylesheets().add(requireResource("/wled-audio-sync.css"));
 
-    AppIconSupport.apply(stage, WledAudioSyncSender.APP_NAME);
+    AppIconSupport.apply(WledAudioSyncSender.APP_NAME);
     stage.setScene(scene);
     stage.show();
   }
