@@ -1,6 +1,7 @@
 package local.wled.core;
 
 public enum DdpColorPalette {
+  NIGHTCLUB("nightclub", "夜店 (Nightclub)"),
   AURORA("aurora", "极光 (Aurora)"),
   SUNSET("sunset", "落日 (Sunset)"),
   FIRE("fire", "烈焰 (Fire)"),
@@ -25,7 +26,7 @@ public enum DdpColorPalette {
 
   public static DdpColorPalette fromCliValue(String value) {
     if (value == null) {
-      return AURORA;
+      return NIGHTCLUB;
     }
     String normalized = value.trim().toLowerCase();
     for (DdpColorPalette palette : values()) {
@@ -33,18 +34,18 @@ public enum DdpColorPalette {
         return palette;
       }
     }
-    throw new IllegalArgumentException("--ddp-palette only supports: aurora, sunset, fire, ocean, candy");
+    throw new IllegalArgumentException("--ddp-palette only supports: nightclub, aurora, sunset, fire, ocean, candy");
   }
 
   public static DdpColorPalette fromUiLabel(String label) {
     if (label == null) {
-      return AURORA;
+      return NIGHTCLUB;
     }
     for (DdpColorPalette palette : values()) {
       if (palette.uiLabel.equals(label)) {
         return palette;
       }
     }
-    return AURORA;
+    return NIGHTCLUB;
   }
 }

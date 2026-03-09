@@ -15,7 +15,7 @@ final class Args {
   static final int DEFAULT_DDP_PORT = 4048;
   static final int DEFAULT_DDP_PIXELS = 90;
   static final DdpLayoutMode DEFAULT_DDP_LAYOUT = DdpLayoutMode.REPEAT;
-  static final DdpColorPalette DEFAULT_DDP_PALETTE = DdpColorPalette.AURORA;
+  static final DdpColorPalette DEFAULT_DDP_PALETTE = DdpColorPalette.NIGHTCLUB;
   static final int DEFAULT_SAMPLE_RATE = 44100;
   static final int DEFAULT_CHANNELS = 2;
   static final int DEFAULT_FFT_SIZE = 1024;
@@ -159,7 +159,7 @@ final class Args {
     System.out.println("  --port <n>                目标 UDP 端口 (audio-sync 默认 11988, ddp 默认 4048)");
     System.out.println("  --ddp-pixels <n>          DDP 模式像素数 (默认: " + DEFAULT_DDP_PIXELS + ")");
     System.out.println("  --ddp-layout <stretch|repeat|mirror>  DDP 灯带布局 (默认: " + DEFAULT_DDP_LAYOUT.cliValue() + ")");
-    System.out.println("  --ddp-palette <aurora|sunset|fire|ocean|candy>  DDP 配色 (默认: " + DEFAULT_DDP_PALETTE.cliValue() + ")");
+    System.out.println("  --ddp-palette <nightclub|aurora|sunset|fire|ocean|candy>  DDP 配色 (默认: " + DEFAULT_DDP_PALETTE.cliValue() + ")");
     System.out.println("  --rate <hz>               采样率 (默认: 44100)");
     System.out.println("  --channels <1|2>          声道数 (默认: 2)");
     System.out.println("  --fft <n>                 FFT 点数, 2 的幂 (默认: 1024)");

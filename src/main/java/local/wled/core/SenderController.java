@@ -270,7 +270,8 @@ public final class SenderController {
         float rawAmp = SignalProcessing.clamp255(rms * 512.0f * ampAutoGain);
         ampAutoGain = SignalProcessing.updateAutoGain(ampAutoGain, rawAmp, 140f);
 
-        smoothed = 0.85f * smoothed + 0.15f * rawAmp;
+        float smoothingCarry = config.outputMode == OutputMode.DDP ? 0.78f : 0.85f;
+        smoothed = smoothingCarry * smoothed + (1.0f - smoothingCarry) * rawAmp;
 
         SignalProcessing.fftRadix2(re, im);
         SignalProcessing.FftSummary fftSummary = SignalProcessing.summarizeFftTo16(re, im, config.sampleRate, config.fftSize, fftAutoGain, fft16);
@@ -285,7 +286,7 @@ public final class SenderController {
 
         byte[][] packets;
         if (config.outputMode == OutputMode.DDP) {
-          SignalProcessing.renderSpectrumToDdpRgb(fft16, smoothed, ddpRgb, activeDdpLayoutMode.get(), activeDdpColorPalette.get());
+          SignalProcessing.renderSpectrumToDdpRgb(fft16, smoothed, frameCounter, ddpRgb, activeDdpLayoutMode.get(), activeDdpColorPalette.get());
           packets = SignalProcessing.buildDdpPackets(ddpRgb, frameCounter, 1);
         } else {
           byte[] pkt = SignalProcessing.buildWledAudioSyncV2(rawAmp, smoothed, peak, frameCounter & 0xFF, fft16, fftSummary.magnitude, fftSummary.majorPeakHz);

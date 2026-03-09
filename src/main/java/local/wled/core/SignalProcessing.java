@@ -82,6 +82,7 @@ final class SignalProcessing {
   static void renderSpectrumToDdpRgb(
       byte[] spectrum16,
       float smoothedAmp,
+      int frameCounter,
       byte[] outRgb,
       DdpLayoutMode layoutMode,
       DdpColorPalette colorPalette
@@ -92,15 +93,112 @@ final class SignalProcessing {
     }
 
     DdpLayoutMode mode = layoutMode == null ? DdpLayoutMode.REPEAT : layoutMode;
-    DdpColorPalette palette = colorPalette == null ? DdpColorPalette.AURORA : colorPalette;
+    DdpColorPalette palette = colorPalette == null ? DdpColorPalette.NIGHTCLUB : colorPalette;
     double ampNorm = clamp01(smoothedAmp / 255.0);
     double global = 0.24 + 1.40 * Math.pow(ampNorm, 0.72);
     double bandsMax = SenderMetrics.SPECTRUM_BANDS - 1.0;
+    double motionPhase = frameCounter * 0.24;
+    double sweepAmount;
+    double sweepFreq;
+    double pulseFreq;
+    double pulseDepth;
+    double sparkleFreq;
+    double sparkleDepth;
+    double hueDriftAmount;
+    double hueDriftFreq;
+    double strobeStrength;
+    double strobeFreq;
+    double strobeSpatial;
+    switch (palette) {
+      case NIGHTCLUB:
+        sweepAmount = 0.85 + ampNorm * 1.30;
+        sweepFreq = 1.45;
+        pulseFreq = 1.75;
+        pulseDepth = 0.34;
+        sparkleFreq = 2.90;
+        sparkleDepth = 0.24;
+        hueDriftAmount = ampNorm * 30.0;
+        hueDriftFreq = 0.90;
+        strobeStrength = 0.52;
+        strobeFreq = 2.20;
+        strobeSpatial = 8.0;
+        break;
+      case FIRE:
+        sweepAmount = 0.58 + ampNorm * 0.72;
+        sweepFreq = 1.10;
+        pulseFreq = 1.40;
+        pulseDepth = 0.26;
+        sparkleFreq = 2.25;
+        sparkleDepth = 0.16;
+        hueDriftAmount = ampNorm * 18.0;
+        hueDriftFreq = 0.78;
+        strobeStrength = 0.68;
+        strobeFreq = 2.65;
+        strobeSpatial = 6.0;
+        break;
+      case OCEAN:
+        sweepAmount = 0.34 + ampNorm * 0.52;
+        sweepFreq = 0.70;
+        pulseFreq = 0.92;
+        pulseDepth = 0.14;
+        sparkleFreq = 1.55;
+        sparkleDepth = 0.08;
+        hueDriftAmount = ampNorm * 14.0;
+        hueDriftFreq = 0.52;
+        strobeStrength = 0.0;
+        strobeFreq = 1.0;
+        strobeSpatial = 0.0;
+        break;
+      case CANDY:
+        sweepAmount = 0.62 + ampNorm * 0.90;
+        sweepFreq = 1.20;
+        pulseFreq = 1.28;
+        pulseDepth = 0.22;
+        sparkleFreq = 3.30;
+        sparkleDepth = 0.18;
+        hueDriftAmount = ampNorm * 24.0;
+        hueDriftFreq = 1.10;
+        strobeStrength = 0.26;
+        strobeFreq = 2.00;
+        strobeSpatial = 10.0;
+        break;
+      case SUNSET:
+        sweepAmount = 0.48 + ampNorm * 0.70;
+        sweepFreq = 0.95;
+        pulseFreq = 1.06;
+        pulseDepth = 0.12;
+        sparkleFreq = 1.80;
+        sparkleDepth = 0.02;
+        hueDriftAmount = ampNorm * 16.0;
+        hueDriftFreq = 0.66;
+        strobeStrength = 0.0;
+        strobeFreq = 1.0;
+        strobeSpatial = 0.0;
+        break;
+      case AURORA:
+      default:
+        sweepAmount = 0.55 + ampNorm * 0.95;
+        sweepFreq = 1.00;
+        pulseFreq = 1.35;
+        pulseDepth = 0.20;
+        sparkleFreq = 2.30;
+        sparkleDepth = 0.14;
+        hueDriftAmount = ampNorm * 20.0;
+        hueDriftFreq = 0.72;
+        strobeStrength = 0.0;
+        strobeFreq = 1.0;
+        strobeSpatial = 0.0;
+        break;
+    }
     for (int i = 0; i < pixels; i++) {
       double pos = resolveBandPosition(i, pixels, mode, bandsMax);
-      int i0 = (int) Math.floor(pos);
+      double spatialNorm = resolveSpatialNorm(i, pixels, mode);
+      double sweepWave = Math.sin(motionPhase * sweepFreq + spatialNorm * Math.PI * 4.0);
+      double sampledPos = shiftBandPosition(pos, sweepWave * sweepAmount, mode, bandsMax);
+
+      int i0 = Math.max(0, Math.min(SenderMetrics.SPECTRUM_BANDS - 1, (int) Math.floor(sampledPos)));
       int i1 = Math.min(SenderMetrics.SPECTRUM_BANDS - 1, i0 + 1);
-      double mix = pos - i0;
+      double mix = Math.max(0.0, Math.min(1.0, sampledPos - i0));
 
       double b0 = (spectrum16[i0] & 0xFF) / 255.0;
       double b1 = (spectrum16[i1] & 0xFF) / 255.0;
@@ -108,9 +206,17 @@ final class SignalProcessing {
       double gated = Math.max(0.0, level - 0.045) / 0.955;
       double shaped = Math.pow(gated, 0.58);
       double punch = 0.88 + 0.46 * Math.pow(Math.max(0.0, level), 0.5);
-      double value = clamp01(shaped * global * punch);
+      double pulse = 0.92 + pulseDepth * Math.sin(motionPhase * pulseFreq - spatialNorm * Math.PI * 5.5);
+      double sparkle = 0.92 + sparkleDepth * Math.sin(motionPhase * sparkleFreq + sampledPos * 0.9);
+      double strobe = 1.0;
+      if (strobeStrength > 0.0) {
+        double beatWave = Math.sin(motionPhase * strobeFreq - spatialNorm * Math.PI * strobeSpatial);
+        double gate = beatWave > 0.12 ? 1.0 : 0.16;
+        strobe = (1.0 - strobeStrength) + strobeStrength * gate;
+      }
+      double value = clamp01(shaped * global * punch * pulse * sparkle * strobe);
       double posNorm = pos / bandsMax;
-      double hue = paletteHue(palette, posNorm, value);
+      double hue = paletteHue(palette, posNorm, value) + hueDriftAmount * Math.sin(motionPhase * hueDriftFreq + spatialNorm * Math.PI * 3.0);
       double sat = paletteSaturation(palette, posNorm, value);
       double val = paletteValue(palette, posNorm, value);
 
@@ -122,8 +228,34 @@ final class SignalProcessing {
     }
   }
 
+  private static double resolveSpatialNorm(int pixelIndex, int pixelCount, DdpLayoutMode mode) {
+    if (pixelCount <= 1) {
+      return 0.0;
+    }
+    double t = pixelIndex / (pixelCount - 1.0);
+    if (mode == DdpLayoutMode.MIRROR) {
+      return Math.abs(t - 0.5) * 2.0;
+    }
+    return t;
+  }
+
+  private static double shiftBandPosition(double basePos, double offset, DdpLayoutMode mode, double bandsMax) {
+    double shifted = basePos + offset;
+    if (mode == DdpLayoutMode.STRETCH) {
+      return Math.max(0.0, Math.min(bandsMax, shifted));
+    }
+    double span = bandsMax + 1.0;
+    double wrapped = shifted % span;
+    if (wrapped < 0.0) {
+      wrapped += span;
+    }
+    return wrapped;
+  }
+
   private static double paletteHue(DdpColorPalette palette, double posNorm, double value) {
     switch (palette) {
+      case NIGHTCLUB:
+        return 292.0 - posNorm * 92.0 + value * 14.0;
       case SUNSET:
         return 34.0 - posNorm * 44.0 - value * 8.0;
       case FIRE:
@@ -140,6 +272,8 @@ final class SignalProcessing {
 
   private static double paletteSaturation(DdpColorPalette palette, double posNorm, double value) {
     switch (palette) {
+      case NIGHTCLUB:
+        return clamp01(0.93 + value * 0.07);
       case SUNSET:
         return clamp01(0.88 + value * 0.10);
       case FIRE:
@@ -156,6 +290,8 @@ final class SignalProcessing {
 
   private static double paletteValue(DdpColorPalette palette, double posNorm, double value) {
     switch (palette) {
+      case NIGHTCLUB:
+        return clamp01(value * 0.92 + 0.06 + Math.max(0.0, 0.5 - Math.abs(posNorm - 0.5)) * 0.05);
       case SUNSET:
         return clamp01(value * 0.90 + 0.10 + posNorm * 0.08);
       case FIRE:

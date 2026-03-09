@@ -16,7 +16,7 @@
 - JavaFX GUI，参数可视化配置（输入设备、目标地址、模式、FPS、FFT 等）
 - 支持 `audio-sync` / `ddp` 双模式切换
 - DDP 支持 3 种布局：`stretch` / `repeat` / `mirror`
-- DDP 支持 5 套配色：`aurora` / `sunset` / `fire` / `ocean` / `candy`
+- DDP 支持 6 套配色：`nightclub` / `aurora` / `sunset` / `fire` / `ocean` / `candy`
 - 运行中可实时切换 DDP 布局和配色（DDP 模式下立即生效）
 - 推送开关关闭时会真正断开发送 socket，开启时重连
 - 推送失败带重试退避（避免高频狂刷重连日志）
@@ -65,7 +65,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="" javafx:run
 - 端口默认：`11988`（Audio Sync）/ `4048`（DDP）
 - `--ddp-pixels` 默认：`90`
 - `--ddp-layout` 默认：`repeat`
-- `--ddp-palette` 默认：`aurora`
+- `--ddp-palette` 默认：`nightclub`
 - `--fps` 默认：`50`
 - GUI 初始开关：`Master=关`、`Capture=开`、`Push=关`
 
@@ -81,7 +81,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Dexec.mainClass=local.wled.app
 JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--input BlackHole --dest 192.168.31.57 --port 11988" javafx:run
 
 # DDP 像素推送
-JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --dest 192.168.31.57 --ddp-pixels 150 --ddp-layout repeat --ddp-palette aurora --port 4048" javafx:run
+JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --dest 192.168.31.57 --ddp-pixels 150 --ddp-layout repeat --ddp-palette nightclub --port 4048" javafx:run
 ```
 
 如果你希望 Dock 显示固定应用名（而不是 `java`），可用：
@@ -98,7 +98,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --des
 - `--port`：目标端口（`audio-sync=11988`, `ddp=4048`）
 - `--ddp-pixels`：DDP 像素数（默认 `90`，范围 `1~4096`）
 - `--ddp-layout`：`stretch` / `repeat` / `mirror`
-- `--ddp-palette`：`aurora` / `sunset` / `fire` / `ocean` / `candy`
+- `--ddp-palette`：`nightclub` / `aurora` / `sunset` / `fire` / `ocean` / `candy`
 - `--rate`：采样率（默认 `44100`）
 - `--channels`：声道数（默认 `2`，仅支持 `1/2`）
 - `--fft`：FFT 点数（默认 `1024`，必须为 2 的幂）
@@ -115,6 +115,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --des
 
 ### 配色
 
+- `nightclub`：蓝紫霓虹 + 强脉冲，节奏冲击最强
 - `aurora`：青绿到暖色，均衡通用
 - `sunset`：暖金橙红，氛围柔和
 - `fire`：红橙高饱和，冲击强

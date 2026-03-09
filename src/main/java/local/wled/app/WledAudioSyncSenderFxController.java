@@ -272,6 +272,7 @@ public final class WledAudioSyncSenderFxController {
     ddpLayoutBox.getItems().setAll(DdpLayoutMode.STRETCH.uiLabel(), DdpLayoutMode.REPEAT.uiLabel(), DdpLayoutMode.MIRROR.uiLabel());
     ddpLayoutBox.setValue(effectiveArgs.ddpLayoutMode.uiLabel());
     ddpPaletteBox.getItems().setAll(
+        DdpColorPalette.NIGHTCLUB.uiLabel(),
         DdpColorPalette.AURORA.uiLabel(),
         DdpColorPalette.SUNSET.uiLabel(),
         DdpColorPalette.FIRE.uiLabel(),
