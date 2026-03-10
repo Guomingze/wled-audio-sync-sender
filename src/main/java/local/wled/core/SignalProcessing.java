@@ -195,6 +195,7 @@ final class SignalProcessing {
       double spatialNorm = resolveSpatialNorm(i, pixels, mode);
       double sweepWave = Math.sin(motionPhase * sweepFreq + spatialNorm * Math.PI * 4.0);
       double sampledPos = shiftBandPosition(pos, sweepWave * sweepAmount, mode, bandsMax);
+      sampledPos = stylizeSampledPosition(sampledPos, pos, spatialNorm, motionPhase, mode, bandsMax, palette);
 
       int i0 = Math.max(0, Math.min(SenderMetrics.SPECTRUM_BANDS - 1, (int) Math.floor(sampledPos)));
       int i1 = Math.min(SenderMetrics.SPECTRUM_BANDS - 1, i0 + 1);
@@ -203,6 +204,7 @@ final class SignalProcessing {
       double b0 = (spectrum16[i0] & 0xFF) / 255.0;
       double b1 = (spectrum16[i1] & 0xFF) / 255.0;
       double level = mode == DdpLayoutMode.STRETCH ? b0 * (1.0 - mix) + b1 * mix : b0;
+      level = stylizeLevel(level, spectrum16, sampledPos, motionPhase, palette);
       double gated = Math.max(0.0, level - 0.045) / 0.955;
       double shaped = Math.pow(gated, 0.58);
       double punch = 0.88 + 0.46 * Math.pow(Math.max(0.0, level), 0.5);
@@ -215,6 +217,10 @@ final class SignalProcessing {
         strobe = (1.0 - strobeStrength) + strobeStrength * gate;
       }
       double value = clamp01(shaped * global * punch * pulse * sparkle * strobe);
+      if (mode == DdpLayoutMode.MIRROR) {
+        double centerFocus = Math.pow(Math.max(0.0, 1.0 - spatialNorm), 1.45);
+        value = clamp01(value * (0.60 + centerFocus * 0.95) + centerFocus * 0.12);
+      }
       double posNorm = pos / bandsMax;
       double hue = paletteHue(palette, posNorm, value) + hueDriftAmount * Math.sin(motionPhase * hueDriftFreq + spatialNorm * Math.PI * 3.0);
       double sat = paletteSaturation(palette, posNorm, value);
@@ -236,12 +242,15 @@ final class SignalProcessing {
     if (mode == DdpLayoutMode.MIRROR) {
       return Math.abs(t - 0.5) * 2.0;
     }
+    if (mode == DdpLayoutMode.REPEAT) {
+      return repeatCycleNorm(pixelIndex, pixelCount);
+    }
     return t;
   }
 
   private static double shiftBandPosition(double basePos, double offset, DdpLayoutMode mode, double bandsMax) {
     double shifted = basePos + offset;
-    if (mode == DdpLayoutMode.STRETCH) {
+    if (mode == DdpLayoutMode.STRETCH || mode == DdpLayoutMode.MIRROR) {
       return Math.max(0.0, Math.min(bandsMax, shifted));
     }
     double span = bandsMax + 1.0;
@@ -250,6 +259,57 @@ final class SignalProcessing {
       wrapped += span;
     }
     return wrapped;
+  }
+
+  private static double stylizeSampledPosition(double sampledPos, double basePos, double spatialNorm, double motionPhase,
+                                               DdpLayoutMode mode, double bandsMax, DdpColorPalette palette) {
+    switch (palette) {
+      case SUNSET:
+        return shiftBandPosition(basePos * 0.82 + sampledPos * 0.18, 0.0, mode, bandsMax);
+      case OCEAN:
+        return shiftBandPosition(basePos * 0.74 + sampledPos * 0.26, 0.0, mode, bandsMax);
+      case CANDY:
+        double zig = Math.sin(motionPhase * 2.7 + spatialNorm * Math.PI * 13.0) * 0.55;
+        double chunked = Math.floor((sampledPos + zig) * 1.15) / 1.15;
+        double candyStep = Math.sin(motionPhase * 3.6 + spatialNorm * Math.PI * 18.0) > 0.0 ? 0.38 : -0.38;
+        return shiftBandPosition(chunked, candyStep, mode, bandsMax);
+      case AURORA:
+        return shiftBandPosition(sampledPos, Math.sin(motionPhase * 0.85 + spatialNorm * Math.PI * 2.5) * 0.16, mode, bandsMax);
+      case NIGHTCLUB:
+      case FIRE:
+      default:
+        return sampledPos;
+    }
+  }
+
+  private static double stylizeLevel(double level, byte[] spectrum16, double sampledPos, double motionPhase, DdpColorPalette palette) {
+    switch (palette) {
+      case SUNSET:
+        return clamp01(level * 0.58 + sampleSpectrumLevel(spectrum16, sampledPos - 0.75) * 0.21 + sampleSpectrumLevel(spectrum16, sampledPos + 0.75) * 0.21);
+      case OCEAN:
+        return clamp01(level * 0.72 + sampleSpectrumLevel(spectrum16, sampledPos - 0.45) * 0.14 + sampleSpectrumLevel(spectrum16, sampledPos + 0.45) * 0.14);
+      case CANDY:
+        double candyPeak = Math.max(level, sampleSpectrumLevel(spectrum16, sampledPos - 0.18));
+        candyPeak = Math.max(candyPeak, sampleSpectrumLevel(spectrum16, sampledPos + 0.18));
+        double stripeGate = Math.sin(motionPhase * 3.3 + sampledPos * 6.2) > 0.0 ? 1.72 : 0.0;
+        return clamp01(Math.pow(candyPeak, 0.62) * stripeGate);
+      case AURORA:
+        return clamp01(level * 0.82 + sampleSpectrumLevel(spectrum16, sampledPos + 0.35) * 0.18);
+      case NIGHTCLUB:
+      case FIRE:
+      default:
+        return level;
+    }
+  }
+
+  private static double sampleSpectrumLevel(byte[] spectrum16, double bandPos) {
+    double clamped = Math.max(0.0, Math.min(SenderMetrics.SPECTRUM_BANDS - 1.0, bandPos));
+    int i0 = (int) Math.floor(clamped);
+    int i1 = Math.min(SenderMetrics.SPECTRUM_BANDS - 1, i0 + 1);
+    double mix = clamped - i0;
+    double b0 = (spectrum16[i0] & 0xFF) / 255.0;
+    double b1 = (spectrum16[i1] & 0xFF) / 255.0;
+    return b0 * (1.0 - mix) + b1 * mix;
   }
 
   private static double paletteHue(DdpColorPalette palette, double posNorm, double value) {
@@ -299,7 +359,7 @@ final class SignalProcessing {
       case OCEAN:
         return clamp01(value * 0.80 + 0.06 + (1.0 - posNorm) * 0.06);
       case CANDY:
-        return clamp01(value * 0.74 + 0.20 + posNorm * 0.04);
+        return clamp01(value * 0.86 + 0.08 + posNorm * 0.03);
       case AURORA:
       default:
         return clamp01(value * 0.88 + 0.12);
@@ -315,12 +375,28 @@ final class SignalProcessing {
       return t * bandsMax;
     }
     if (mode == DdpLayoutMode.MIRROR) {
-      double mirrored = t <= 0.5 ? t * 2.0 : (1.0 - t) * 2.0;
-      double halfCycles = Math.max(1.0, Math.round((pixelCount * 0.5) / 128.0));
-      return ((mirrored * halfCycles) % 1.0) * bandsMax;
+      double centered = 1.0 - Math.abs(t - 0.5) * 2.0;
+      return Math.pow(Math.max(0.0, centered), 1.18) * bandsMax;
     }
-    double cycles = Math.max(1.0, Math.round(pixelCount / 128.0));
-    return ((t * cycles) % 1.0) * bandsMax;
+    return repeatCycleNorm(pixelIndex, pixelCount) * bandsMax;
+  }
+
+  private static double repeatCycleNorm(int pixelIndex, int pixelCount) {
+    int cycles = repeatCycles(pixelCount);
+    int cycle = Math.min(cycles - 1, (pixelIndex * cycles) / pixelCount);
+    int start = (cycle * pixelCount) / cycles;
+    int end = ((cycle + 1) * pixelCount) / cycles - 1;
+    if (end <= start) {
+      return 0.0;
+    }
+    return (pixelIndex - start) / (double) (end - start);
+  }
+
+  private static int repeatCycles(int pixelCount) {
+    if (pixelCount <= 48) {
+      return 3;
+    }
+    return Math.max(3, (int) Math.round(pixelCount / 28.0));
   }
 
   private static double clamp01(double value) {

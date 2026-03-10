@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Set;
 
 final class Args {
-  static final String DEFAULT_DEST = "192.168.31.57";
+  static final String DEFAULT_DEST = "192.168.31.191";
   static final int DEFAULT_PORT = 11988;
   static final int DEFAULT_DDP_PORT = 4048;
-  static final int DEFAULT_DDP_PIXELS = 90;
+  static final int DEFAULT_DDP_PIXELS = 42;
   static final DdpLayoutMode DEFAULT_DDP_LAYOUT = DdpLayoutMode.REPEAT;
   static final DdpColorPalette DEFAULT_DDP_PALETTE = DdpColorPalette.NIGHTCLUB;
   static final int DEFAULT_SAMPLE_RATE = 44100;
@@ -100,7 +100,7 @@ final class Args {
       }
     }
 
-    OutputMode mode = OutputMode.fromCliValue(getOr(kv, "mode", OutputMode.AUDIO_SYNC_V2.cliValue()));
+    OutputMode mode = OutputMode.fromCliValue(getOr(kv, "mode", OutputMode.DDP.cliValue()));
     String dest = getOr(kv, "dest", DEFAULT_DEST);
     int defaultPort = mode == OutputMode.DDP ? DEFAULT_DDP_PORT : DEFAULT_PORT;
     int port = parseInt(getOr(kv, "port", String.valueOf(defaultPort)), defaultPort);
@@ -154,8 +154,8 @@ final class Args {
     System.out.println("参数:");
     System.out.println("  --list-devices            列出音频输入设备");
     System.out.println("  --input <关键字>          按名称/描述匹配选择输入设备 (默认: " + DEFAULT_INPUT + ")");
-    System.out.println("  --mode <audio-sync|ddp>   推送模式 (默认: audio-sync)");
-    System.out.println("  --dest <ip>               目标 IP (默认: 239.0.0.1 组播)");
+    System.out.println("  --mode <audio-sync|ddp>   推送模式 (默认: ddp)");
+    System.out.println("  --dest <ip>               目标 IP (默认: " + DEFAULT_DEST + ")");
     System.out.println("  --port <n>                目标 UDP 端口 (audio-sync 默认 11988, ddp 默认 4048)");
     System.out.println("  --ddp-pixels <n>          DDP 模式像素数 (默认: " + DEFAULT_DDP_PIXELS + ")");
     System.out.println("  --ddp-layout <stretch|repeat|mirror>  DDP 灯带布局 (默认: " + DEFAULT_DDP_LAYOUT.cliValue() + ")");

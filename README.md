@@ -60,16 +60,16 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="" javafx:run
 
 ## 默认值（当前代码）
 
-- `--dest` 默认：`192.168.31.57`
-- `--mode` 默认：`audio-sync`
+- `--dest` 默认：`192.168.31.191`
+- `--mode` 默认：`ddp`
 - 端口默认：`11988`（Audio Sync）/ `4048`（DDP）
-- `--ddp-pixels` 默认：`90`
+- `--ddp-pixels` 默认：`42`
 - `--ddp-layout` 默认：`repeat`
 - `--ddp-palette` 默认：`nightclub`
 - `--fps` 默认：`50`
 - GUI 初始开关：`Master=关`、`Capture=开`、`Push=关`
 
-> 注意：`192.168.31.57` 是示例局域网地址，实际使用请改成你自己的 WLED IP。
+> 注意：`192.168.31.191` 是当前默认局域网地址，实际使用请改成你自己的 WLED IP。
 
 ## 常用启动示例
 
@@ -78,10 +78,10 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="" javafx:run
 JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Dexec.mainClass=local.wled.app.WledAudioSyncSender -Dexec.args="--list-devices" exec:java
 
 # Audio Sync（单播到某个 WLED）
-JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--input BlackHole --dest 192.168.31.57 --port 11988" javafx:run
+JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--input BlackHole --dest 192.168.31.191 --port 11988" javafx:run
 
 # DDP 像素推送
-JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --dest 192.168.31.57 --ddp-pixels 150 --ddp-layout repeat --ddp-palette nightclub --port 4048" javafx:run
+JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --dest 192.168.31.191 --ddp-pixels 150 --ddp-layout repeat --ddp-palette nightclub --port 4048" javafx:run
 ```
 
 如果你希望 Dock 显示固定应用名（而不是 `java`），可用：
@@ -93,10 +93,10 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --des
 ## 参数说明
 
 - `--input`：输入设备关键字（默认 `BlackHole`）
-- `--dest`：目标 IP（默认 `192.168.31.57`）
-- `--mode`：`audio-sync` 或 `ddp`（默认 `audio-sync`）
+- `--dest`：目标 IP（默认 `192.168.31.191`）
+- `--mode`：`audio-sync` 或 `ddp`（默认 `ddp`）
 - `--port`：目标端口（`audio-sync=11988`, `ddp=4048`）
-- `--ddp-pixels`：DDP 像素数（默认 `90`，范围 `1~4096`）
+- `--ddp-pixels`：DDP 像素数（默认 `42`，范围 `1~4096`）
 - `--ddp-layout`：`stretch` / `repeat` / `mirror`
 - `--ddp-palette`：`nightclub` / `aurora` / `sunset` / `fire` / `ocean` / `candy`
 - `--rate`：采样率（默认 `44100`）
@@ -109,9 +109,9 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) mvn -q -Djavafx.args="--mode ddp --des
 
 ### 布局
 
-- `stretch`：16 频段拉伸到整条灯带，过渡平滑
-- `repeat`：16 频段重复铺开，节奏感强
-- `mirror`：左右镜像，适合中点扩散视觉
+- `stretch`：16 频段平滑拉伸到整条灯带，过渡最顺
+- `repeat`：短灯带下也会做可见重复分段，画面更碎、更有节奏感
+- `mirror`：以中间为视觉焦点向两边对称铺开，中点扩散感更明显
 
 ### 配色
 
